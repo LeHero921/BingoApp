@@ -3,10 +3,11 @@ using UnityEngine;
 public class BoardsList_Helper : MonoBehaviour
 {
     public GameObject ListEntry;
-    public UI_Object AddDialogue;
+    public NewBoardDialogue AddDialogue;
 
     public void CreateBoard()
     {
-        AddDialogue.OpenUI();
+        AddDialogue.InitUI();
+        AddDialogue.uI_Object.OpenUI();
     }
 }
