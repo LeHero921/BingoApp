@@ -19,13 +19,23 @@ public class Board
 
 [System.Serializable]
 public class WordList {
+    public WordList(string name, List<string> entries) {
+        ListID = name;
+        ListEntries = entries;
+    }
+
     public string ListID;
     public List<string> ListEntries;
 }
 
 [System.Serializable]
 public class Field {
-        public Vector2 field_position;
-        public string field_entry;
-        public bool field_completed;
+    public Field(Vector2 pos, string entry) {
+        field_position = pos;
+        field_entry = entry;
+    }
+
+    public Vector2 field_position;
+    public string field_entry;
+    public bool field_completed;
 }

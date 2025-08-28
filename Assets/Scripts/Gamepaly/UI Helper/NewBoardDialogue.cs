@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,7 @@ public class NewBoardDialogue : MonoBehaviour
     public TMP_InputField nameInput;
     public TMP_Dropdown listSelector;
     public Button saveButton;
+    public int boardSize;
 
     string newName;
     string selectionID;
@@ -19,17 +21,14 @@ public class NewBoardDialogue : MonoBehaviour
         SaveFile s = SaveManager.Instance.LoadGame();
         for (int i = 0; i < s.lists.Count; i++)
         {
-            listSelector.AddOptions(s.lists[i].ListEntries);
+            listSelector.options.Add(new TMP_Dropdown.OptionData(s.lists[i].ListID));
         }
 
-        saveButton.onClick.AddListener(OnSaveButton);
+        saveButton.onClick.AddListener(SaveBoard);
         nameInput.onValueChanged.AddListener(OnNameInput);
         listSelector.onValueChanged.AddListener(OnListSelection);
     }
 
-    void OnSaveButton()
-    {
-    }
     void OnNameInput(string name)
     {
         newName = name;
@@ -44,16 +43,29 @@ public class NewBoardDialogue : MonoBehaviour
         SaveFile s = SaveManager.Instance.LoadGame();
         WordList wl = s.lists.Find(x => x.ListID == selectionID);
         List<Field> newFields = new List<Field>();
-        for (int i = 0; i < 9; i++)
+
+        List<string> shuffled = wl.ListEntries
+            .OrderBy(_ => Random.value) // UnityEngine.Random
+            .Take(9) // nur 9 Wörter
+            .ToList();
+
+        int index = 0;
+        for (int x = 0; x < boardSize; x++)
         {
-            newFields.Add();
+            for (int y = 0; y < boardSize; y++)
+            {
+                string newEntry = shuffled[index];
+                newFields.Add(new Field(new Vector2(x,y), newEntry));
+                index++;
+            }
         }
-        return null;
+        return newFields;
     }
 
     public void SaveBoard()
     {
-        newBoard = new Board(newName, selectionID, GenerateBoardFields());
+        List<Field> fields = GenerateBoardFields();
+        newBoard = new Board(newName, selectionID, fields);
         GameplayManager.Instance.NewBoard(newBoard);
     }
 }
