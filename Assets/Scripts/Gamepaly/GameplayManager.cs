@@ -25,6 +25,7 @@ public class GameplayManager : MonoBehaviour
     }
     public void NewBoard(Board board)
     {
+        Debug.LogWarning("Adding Board");
         SaveFile s = SaveManager.Instance.LoadGame();
         s.boards.Add(board);
         SaveManager.Instance.SaveGame(s);
@@ -33,13 +34,17 @@ public class GameplayManager : MonoBehaviour
     public void RemoveList(WordList list)
     {
         SaveFile s = SaveManager.Instance.LoadGame();
-        s.lists.Remove(list);
+        Debug.LogError("A " + s.lists.Count);
+        s.lists.RemoveAll(l => l.ListID == list.ListID);
+        Debug.LogError("B " + s.lists.Count);
         SaveManager.Instance.SaveGame(s);
+        Actions.OnWordListEntryChange?.Invoke();
     }
     public void RemoveBoard(Board board)
     {
         SaveFile s = SaveManager.Instance.LoadGame();
-        s.boards.Remove(board);
+        s.boards.RemoveAll(b => b.BoardName == board.BoardName);
         SaveManager.Instance.SaveGame(s);
+        Actions.OnBoardEntryChange?.Invoke();
     }
 }

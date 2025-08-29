@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using System.Linq;
 using TMPro;
 using UnityEngine;
@@ -19,9 +20,13 @@ public class NewBoardDialogue : MonoBehaviour
     public void InitUI()
     {
         SaveFile s = SaveManager.Instance.LoadGame();
+        // listSelector.options.Add(new TMP_Dropdown.OptionData("None Selected"));
         for (int i = 0; i < s.lists.Count; i++)
         {
-            listSelector.options.Add(new TMP_Dropdown.OptionData(s.lists[i].ListID));
+            if (listSelector.options[i].text != s.lists[i].ListID)
+            {
+                listSelector.options.Add(new TMP_Dropdown.OptionData(s.lists[i].ListID));
+            }
         }
 
         saveButton.onClick.AddListener(SaveBoard);
@@ -67,5 +72,29 @@ public class NewBoardDialogue : MonoBehaviour
         List<Field> fields = GenerateBoardFields();
         newBoard = new Board(newName, selectionID, fields);
         GameplayManager.Instance.NewBoard(newBoard);
+        Actions.OnBoardEntryChange?.Invoke();
+        uI_Object.CloseUI();
+        DestroyPopUp();
+    }
+
+    public void DestroyPopUp()
+    {
+        Actions.OnDialogueClose?.Invoke();
+        StartCoroutine(timerDestroy());
+    }
+    private IEnumerator timerDestroy()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
+    }
+
+    private void Update() {
+        if (listSelector.value != 0 && nameInput.text != "")
+        {
+            saveButton.interactable = true;
+        }else
+        {
+            saveButton.interactable = false;
+        }
     }
 }

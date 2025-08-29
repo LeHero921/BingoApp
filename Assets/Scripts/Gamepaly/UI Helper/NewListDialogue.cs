@@ -1,4 +1,4 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -29,6 +29,16 @@ public class NewListDialogue : MonoBehaviour
         SubEntries.Add(Instantiate(listEntryObj, scrolViewDestination).GetComponent<WorldListSubEntry>());
     }
 
+    public void LoadExistingList(WordList list)
+    {
+        nameInput.text = list.ListID;
+        for (int i = 0; i < list.ListEntries.Count; i++)
+        {
+            SubEntries.Add(Instantiate(listEntryObj, scrolViewDestination).GetComponent<WorldListSubEntry>());
+            SubEntries[i].entryDataInput.text = list.ListEntries[i];
+        }
+    }
+
     private void OnAddEntryButton()
     {
         SubEntries.Add(Instantiate(listEntryObj, scrolViewDestination).GetComponent<WorldListSubEntry>());
@@ -48,6 +58,20 @@ public class NewListDialogue : MonoBehaviour
         }
         newList = new WordList(newName, entries);
         GameplayManager.Instance.NewList(newList);
+        Actions.OnWordListEntryChange?.Invoke();
+        uI_Object.CloseUI();
+        DestroyPopUp();
+    }
+
+    public void DestroyPopUp()
+    {
+        Actions.OnDialogueClose?.Invoke();
+        StartCoroutine(timerDestroy());
+    }
+    private IEnumerator timerDestroy()
+    {
+        yield return new WaitForSeconds(1);
+        Destroy(gameObject);
     }
 
     private void Update() {

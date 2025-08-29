@@ -1,18 +1,24 @@
-using UnityEngine;
 using TMPro;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class WordListEntry : MonoBehaviour
 {
+    public GameObject EntryObj => gameObject;
     public TextMeshProUGUI NameText;
+    // public Button EditButton;
     public WordList list;
 
-    public void EditEntry()
-    {
-        ;
+    public Button DeleteButton;
+    public event UnityAction<WordListEntry> DeleteButtonClicked;
+
+    private void Start() {
+        DeleteButton.onClick.AddListener(DeleteButtonAction);
     }
 
-    public void DeleteEntry()
+    private void DeleteButtonAction()
     {
-        GameplayManager.Instance.RemoveList(list);
+        DeleteButtonClicked(this);
     }
 }

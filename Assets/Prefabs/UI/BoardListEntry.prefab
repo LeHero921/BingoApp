@@ -288,6 +288,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BoardEntry
   NameText: {fileID: 5124083888213631965}
+  board:
+    BoardName: 
+    LinkedList: 
+    isCompleted: 0
+    fields: []
+  DeleteButton: {fileID: 4265890640667023063}
 --- !u!1 &3558794960771241239
 GameObject:
   m_ObjectHideFlags: 0

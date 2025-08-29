@@ -20,6 +20,8 @@ public class SaveManager : MonoBehaviour
     }
     #endregion
 
+    public SaveFile debugSF;
+
     private string fileName = "savefile.json";
     private string FilePath => Path.Combine(Application.persistentDataPath, fileName);
 
@@ -28,6 +30,7 @@ public class SaveManager : MonoBehaviour
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(FilePath, json);
         Debug.Log($"✅ Savefile gespeichert: {FilePath}");
+        debugSF = data;
     }
 
     // Laden
@@ -38,6 +41,7 @@ public class SaveManager : MonoBehaviour
             string json = File.ReadAllText(FilePath);
             SaveFile data = JsonUtility.FromJson<SaveFile>(json);
             Debug.Log("✅ Savefile geladen");
+            debugSF = data;
             return data;
         }
         else

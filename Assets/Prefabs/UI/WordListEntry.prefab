@@ -91,12 +91,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a42ac47fd6df4f89ab3c09b712d1118, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WordListEntry
-  NameText: {fileID: 0}
-  board:
-    BoardName: 
-    LinkedList: 
-    isCompleted: 0
-    fields: []
+  NameText: {fileID: 1234194155417066439}
+  EditButton: {fileID: 3410853454736343704}
+  list:
+    ListID: 
+    ListEntries: []
+  DeleteButton: {fileID: 8497728203932546765}
 --- !u!1 &1894469782470380108
 GameObject:
   m_ObjectHideFlags: 0
@@ -503,7 +503,7 @@ GameObject:
   - component: {fileID: 2135351187414706092}
   - component: {fileID: 8497728203932546765}
   m_Layer: 0
-  m_Name: DeleteBoardButton
+  m_Name: DeleteListButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
