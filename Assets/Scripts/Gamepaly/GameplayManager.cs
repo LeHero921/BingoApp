@@ -6,6 +6,9 @@ public class GameplayManager : MonoBehaviour
     private static GameplayManager _instance;
     public static GameplayManager Instance => _instance;
 
+    public UI_Object MainScreen;
+    public UI_Object GameScreen;
+
     private void Awake() {
         if (_instance == null)
         {
@@ -46,5 +49,23 @@ public class GameplayManager : MonoBehaviour
         s.boards.RemoveAll(b => b.BoardName == board.BoardName);
         SaveManager.Instance.SaveGame(s);
         Actions.OnBoardEntryChange?.Invoke();
+    }
+
+    /// <summary>
+    /// direction true -> Main > Game | false -> Game > Main
+    /// </summary>
+    /// <param name="direction"></param>
+    public void SwitchScreens(bool direction)
+    {
+        if (direction == true) // from Main to Game
+        {
+            MainScreen.CloseUI();
+            GameScreen.OpenUI();
+        }
+        else // from Game to Main
+        {
+            GameScreen.CloseUI();
+            MainScreen.OpenUI();
+        }
     }
 }

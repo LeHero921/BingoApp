@@ -9,10 +9,14 @@ public class BingoFieldButton : MonoBehaviour
     public Vector3 fieldPosition;
     public bool clicked;
 
+    public Animator animator;
+
     public void LoadButton(string text)
     {
+        Debug.Log("Is button " + buttonLabel.text + " clicked? : " + clicked);
         buttonLabel.text = text;
         fieldButton.onClick.AddListener(OnClick);
+        animator.SetBool("complete", clicked);
     }
 
     public void OnClick()
@@ -24,5 +28,7 @@ public class BingoFieldButton : MonoBehaviour
         {
             clicked = false;
         }
+        animator.SetBool("complete", clicked);
+        Actions.OnBingoFieldButtonClicked();
     }
 }

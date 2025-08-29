@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,6 +27,7 @@ public class BoardsList_Helper : MonoBehaviour
         foreach (var entry in boardEntries)
         {
             entry.DeleteButtonClicked -= DeleteButtonClicked;
+            entry.PlayButtonClicked -= PlayButtonClicked;
         }
         Actions.OnBoardEntryChange -= UpdateUI;
         Actions.OnDialogueClose -= enableCreateButton;
@@ -56,6 +58,7 @@ public class BoardsList_Helper : MonoBehaviour
             newBoardEntry.board = board;
             newBoardEntry.NameText.text = board.BoardName;
             newBoardEntry.DeleteButtonClicked += DeleteButtonClicked;
+            newBoardEntry.PlayButtonClicked += PlayButtonClicked;
             boardEntries.Add(newBoardEntry);
         }
     }
@@ -85,6 +88,12 @@ public class BoardsList_Helper : MonoBehaviour
     private void DeleteButtonClicked(BoardEntry entry)
     {
         RemoveBoard(entry);
+    }
+
+    private void PlayButtonClicked(BoardEntry entry)
+    {
+        GameplayManager.Instance.SwitchScreens(true);
+        BingoField.Instance.LoadField(entry.board);
     }
 
     public void enableCreateButton()

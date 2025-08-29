@@ -294,6 +294,7 @@ MonoBehaviour:
     isCompleted: 0
     fields: []
   DeleteButton: {fileID: 4265890640667023063}
+  PlayButton: {fileID: 3569224362939184790}
 --- !u!1 &3558794960771241239
 GameObject:
   m_ObjectHideFlags: 0

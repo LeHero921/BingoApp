@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -10,10 +11,18 @@ public class BoardEntry : MonoBehaviour
     public Board board;
 
     public Button DeleteButton;
+    public Button PlayButton;
     public event UnityAction<BoardEntry> DeleteButtonClicked;
+    public event UnityAction<BoardEntry> PlayButtonClicked;
 
     private void Start() {
         DeleteButton.onClick.AddListener(DeleteButtonAction);
+        PlayButton.onClick.AddListener(PlayButtonAction);
+    }
+
+    private void PlayButtonAction()
+    {
+        PlayButtonClicked(this);
     }
 
     private void DeleteButtonAction()
