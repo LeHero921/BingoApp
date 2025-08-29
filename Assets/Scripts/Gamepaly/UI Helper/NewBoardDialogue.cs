@@ -55,9 +55,9 @@ public class NewBoardDialogue : MonoBehaviour
             .ToList();
 
         int index = 0;
-        for (int x = 0; x < boardSize; x++)
+        for (int x = 0; x < 3; x++)
         {
-            for (int y = 0; y < boardSize; y++)
+            for (int y = 0; y < 3; y++)
             {
                 string newEntry = shuffled[index];
                 newFields.Add(new Field(new Vector2(x,y), newEntry));
